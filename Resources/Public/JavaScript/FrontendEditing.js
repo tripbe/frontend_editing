@@ -51,9 +51,11 @@ define(['jquery', 'TYPO3/CMS/FrontendEditing/Storage'], function ($, Storage) {
 
 	$('.button-filter').click(function () {
 		$('.t3-frontend-editing__page-tree-filter-wrapper').toggle();
+		$('.t3-frontend-editing__page-site-root-wrapper').hide();
 	});
 
 	$('.button-site-root').click(function () {
+		$('.t3-frontend-editing__page-tree-filter-wrapper').hide();
 		$('.t3-frontend-editing__page-site-root-wrapper').toggle();
 	});
 	// Scroll function when draging content elements to top or bottom of window
