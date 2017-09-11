@@ -64,6 +64,31 @@
       }
     }
   }
+
+  .button-filter, .button-site-root {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 2px;
+    background: white;
+
+    &:active {
+      background: lighten(@gray, 50%);
+      border: 0;
+      border-radius: 4px;
+      padding: 2px 8px;
+    }
+  }
+
+  .t3-frontend-editing__page-site-root-wrapper, .t3-frontend-editing__page-tree-filter-wrapper {
+    display: none;
+  }
+
+  .padding-wrapper {
+    border-bottom: 1px solid @gray-light;
+  }
 }
 
 .push-toright {

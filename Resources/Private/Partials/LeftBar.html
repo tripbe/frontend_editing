@@ -7,6 +7,36 @@
 		<span class="left-bar-button icons icon-icons-site-tree" title="{f:translate(key: 'left-bar.site-tree', extensionName: 'FrontendEditing')}"></span>
 	</div>
 	<div class="padding-wrapper">
+		<table cellspacing="0" class="t3-pagetree-topPanel">
+			<tbody>
+				<tr class="left-row">
+					<td>
+						<div class="t3-pagetree-button-filter">
+							<button type="button" class="button-filter">
+								<span class="t3js-icon icon icon-size-small icon-state-default icon-actions-filter" data-identifier="actions-filter">
+									<span class="icon-markup">
+										<img src="/typo3/sysext/core/Resources/Public/Icons/T3Icons/actions/actions-filter.svg" width="16" height="16">
+									</span>
+								</span>
+							</button>
+						</div>
+					</td>
+					<f:if condition="{mounts}">
+						<td>
+							<div class="t3-pagetree-button-site-root">
+								<button type="button" class="button-site-root">
+									<span class="t3js-icon icon icon-size-small icon-state-default icon-actions-page-new" data-identifier="actions-page-new">
+										<span class="icon-markup">
+											<img src="/typo3/sysext/core/Resources/Public/Icons/T3Icons/apps/apps-pagetree-page-domain.svg" width="16" height="16">
+										</span>
+									</span>
+								</button>
+							</div>
+						</td>
+					</f:if>
+				</tr>
+			</tbody>
+		</table>
 		<f:if condition="{mounts}">
 			<div class="t3-frontend-editing__page-site-root-wrapper">
 				<label>

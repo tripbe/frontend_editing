@@ -49,6 +49,13 @@ define(['jquery', 'TYPO3/CMS/FrontendEditing/Storage'], function ($, Storage) {
 		FrontendEditing.events[key] = value;
 	};
 
+	$('.button-filter').click(function () {
+		$('.t3-frontend-editing__page-tree-filter-wrapper').toggle();
+	});
+
+	$('.button-site-root').click(function () {
+		$('.t3-frontend-editing__page-site-root-wrapper').toggle();
+	});
 	// Scroll function when draging content elements to top or bottom of window
 	var stop = true;
 	var scroll = function(step) {
