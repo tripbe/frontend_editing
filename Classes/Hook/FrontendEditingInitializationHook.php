@@ -39,6 +39,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\FrontendEditing\Service\AccessService;
 use TYPO3\CMS\FrontendEditing\Service\ContentEditableWrapperService;
+use TYPO3\CMS\FrontendEditing\Service\EditorConfigurationService;
 use TYPO3\CMS\Lang\LanguageService;
 
 /**
@@ -205,6 +206,9 @@ class FrontendEditingInitializationHook
         // so it has to be loaded before
         $availableContentElementTypes = $this->getContentItems();
 
+        // Load editor configurations
+        $editorConfiguration = GeneralUtility::makeInstance(EditorConfigurationService::class);
+
         // PageRenderer needs to be completely reinitialized
         // Thus, this hack is necessary for now
         $this->pageRenderer = new PageRenderer();
@@ -259,7 +263,8 @@ class FrontendEditingInitializationHook
             'pageEditUrl' => $pageEditUrl,
             'pageNewUrl' => $pageNewUrl,
             'loadingIcon' => $this->iconFactory->getIcon('spinner-circle-dark', Icon::SIZE_LARGE)->render(),
-            'mounts' => $this->getBEUserMounts()
+            'mounts' => $this->getBEUserMounts(),
+            'editorConfiguration' => json_encode($editorConfiguration->generateEditorConfiguration())
         ]);
 
         // Assign the content
@@ -606,6 +611,7 @@ class FrontendEditingInitializationHook
         if (!$this->typoScriptFrontendController->cObj instanceof ContentObjectRenderer) {
             $this->typoScriptFrontendController->newCObj();
         }
+
         $contentElements = $this->typoScriptFrontendController->cObj->getRecords(
             'tt_content',
             [
