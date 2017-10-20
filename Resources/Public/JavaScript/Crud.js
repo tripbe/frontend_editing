@@ -40,6 +40,7 @@ define(['jquery', 'TYPO3/CMS/FrontendEditing/FrontendEditing'], function ($, Fro
 	FrontendEditing.prototype.getBESessionId = getBESessionId;
 	FrontendEditing.prototype.getFilteringUrl = getFilteringUrl;
 	FrontendEditing.prototype.getEndpointUrl = getEndpointUrl;
+    FrontendEditing.prototype.getEditorConfiguration = getEditorConfiguration;
 	FrontendEditing.prototype.setEndpointUrl = function (url) {
 		this._endpointUrl = url;
 	};
@@ -49,6 +50,9 @@ define(['jquery', 'TYPO3/CMS/FrontendEditing/FrontendEditing'], function ($, Fro
 	FrontendEditing.prototype.setFilteringUrl = function (filteringUrl) {
 		this._filteringUrl = filteringUrl;
 	};
+    FrontendEditing.prototype.setEditorConfiguration = function (editorConfiguration) {
+        this._editorConfiguration = editorConfiguration;
+    };
 
 	var numberOfRequestsLeft;
 
@@ -66,6 +70,10 @@ define(['jquery', 'TYPO3/CMS/FrontendEditing/FrontendEditing'], function ($, Fro
 
 	function getFilteringUrl() {
 		return F._filteringUrl;
+	}
+
+	function getEditorConfiguration() {
+		return F._editorConfiguration;
 	}
 
 	function saveAll() {

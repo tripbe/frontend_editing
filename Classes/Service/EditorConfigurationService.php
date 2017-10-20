@@ -89,8 +89,7 @@ class EditorConfigurationService
 
                 $data = [
                     'configuration' => $configuration,
-                    'externalPlugins' => $externalPlugins,
-                    'hasCkeditorConfiguration' => $rteConfiguration !== null
+                    'externalPlugins' => $externalPlugins
                 ];
 
                 $this->editorConfiguration[$fieldName] = $data;

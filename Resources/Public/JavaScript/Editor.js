@@ -42,8 +42,12 @@ define(['jquery', 'ckeditor', 'ckeditor-jquery-adapter'], function ($, CKEDITOR)
 	};
 
 	function init($iframe, configurationUrl, resourcePath) {
+
 		// Storage for adding and checking if it's empty when navigating to other pages
 		var storage = F.getStorage();
+
+		// Get the editor configuration for all available RTE fields
+		var editorConfiguration = window.F.getEditorConfiguration();
 
 		// The content in the iframe will be used many times
 		var $iframeContents = $iframe.contents();
@@ -192,50 +196,38 @@ define(['jquery', 'ckeditor', 'ckeditor-jquery-adapter'], function ($, CKEDITOR)
 				$parent.attr('href', 'javascript:;');
 			}
 
-			$.ajax({
-				url: configurationUrl,
-				method: 'GET',
-				dataType: 'json',
-				data: {
-					'table': $(this).data('table'),
-					'uid': $(this).data('uid'),
-					'field': $(this).data('field')
-				}
-			}).done(function (data) {
+			// If there is no CKEditor configuration.
+			var config = defaultEditorConfig;
+			if (editorConfiguration.hasOwnProperty($(this).data('field'))) {
+				var fieldEditorConfigurationData = editorConfiguration[$(this).data('field')];
 				// Ensure all plugins / buttons are loaded
-				if (typeof data.externalPlugins !== 'undefined') {
-					eval(data.externalPlugins);
+				if (typeof fieldEditorConfigurationData.externalPlugins !== 'undefined') {
+					eval(fieldEditorConfigurationData.externalPlugins);
 				}
+				config = $.extend(true, config, fieldEditorConfigurationData.configuration);
+			} else {
+				config = $.extend(true, config, defaultSimpleEditorConfig);
+			}
 
-				// If there is no CKEditor configuration.
-				var config = defaultEditorConfig;
-				if (data.hasCkeditorConfiguration) {
-					config = $.extend(true, config, data.configuration);
-				} else {
-					config = $.extend(true, config, defaultSimpleEditorConfig);
-				}
+			$el.ckeditor(config).on('instanceReady.ckeditor', function(event, editor) {
+				// This moves the dom instances of ckeditor into the top bar
+				$('.' + editor.id).detach().appendTo($topBar);
 
-				// Initialize CKEditor now, when finished remember any change
-				$el.ckeditor(config).on('instanceReady.ckeditor', function(event, editor) {
-					// This moves the dom instances of ckeditor into the top bar
-					$('.' + editor.id).detach().appendTo($topBar);
-
-					editor.on('change', function (changeEvent) {
-						if (typeof editor.element !== 'undefined') {
-							var dataSet = editor.element.$.dataset;
-							storage.addSaveItem(dataSet.uid + '_' + dataSet.field + '_' + dataSet.table, {
-								'action': 'save',
-								'table': dataSet.table,
-								'uid': dataSet.uid,
-								'field': dataSet.field,
-								'hasCkeditorConfiguration': data.hasCkeditorConfiguration,
-								'editorInstance': editor.name
-							});
-							F.trigger(F.CONTENT_CHANGE);
-						}
-					});
+				editor.on('change', function (changeEvent) {
+					if (typeof editor.element !== 'undefined') {
+						var dataSet = editor.element.$.dataset;
+						storage.addSaveItem(dataSet.uid + '_' + dataSet.field + '_' + dataSet.table, {
+							'action': 'save',
+							'table': dataSet.table,
+							'uid': dataSet.uid,
+							'field': dataSet.field,
+							'editorInstance': editor.name
+						});
+						F.trigger(F.CONTENT_CHANGE);
+					}
 				});
 			});
+
 		});
 	}
 

@@ -65,6 +65,7 @@ define(['jquery', 'TYPO3/CMS/FrontendEditing/Crud', 'TYPO3/CMS/FrontendEditing/D
 	var storage;
 	var editorConfigurationUrl;
 	var resourcePath;
+	var editorConfiguration;
 
 	function init(options) {
 		$itemCounter = $('.top-bar-action-buttons .items-counter');
@@ -74,6 +75,7 @@ define(['jquery', 'TYPO3/CMS/FrontendEditing/Crud', 'TYPO3/CMS/FrontendEditing/D
 		$discardButton = $('.t3-frontend-editing__discard');
 		editorConfigurationUrl = options.editorConfigurationUrl;
 		resourcePath = options.resourcePath;
+		editorConfiguration = options.editorConfiguration;
 
 		initListeners();
 		bindActions();
@@ -411,7 +413,6 @@ define(['jquery', 'TYPO3/CMS/FrontendEditing/Crud', 'TYPO3/CMS/FrontendEditing/D
 				}
 			});
 		}
-
 	}
 
 	return FrontendEditing;

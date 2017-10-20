@@ -235,6 +235,7 @@ class FrontendEditingInitializationHook
             window.F.setBESessionId(' . GeneralUtility::quoteJSvalue($this->getBeSessionKey()) . ');
             window.F.setFilteringUrl(' . GeneralUtility::quoteJSvalue($filteringUrl) . ');
             window.F.setTranslationLabels(' . json_encode($this->getLocalizedFrontendLabels()) . ');
+            window.F.setEditorConfiguration(' . json_encode($editorConfiguration->generateEditorConfiguration()) . ');
             window.TYPO3.settings = {
                 Textarea: {
                     RTEPopupWindow: {
@@ -263,8 +264,7 @@ class FrontendEditingInitializationHook
             'pageEditUrl' => $pageEditUrl,
             'pageNewUrl' => $pageNewUrl,
             'loadingIcon' => $this->iconFactory->getIcon('spinner-circle-dark', Icon::SIZE_LARGE)->render(),
-            'mounts' => $this->getBEUserMounts(),
-            'editorConfiguration' => json_encode($editorConfiguration->generateEditorConfiguration())
+            'mounts' => $this->getBEUserMounts()
         ]);
 
         // Assign the content
